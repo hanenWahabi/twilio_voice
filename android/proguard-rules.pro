@@ -1,6 +1,6 @@
 # Twilio Programmable Voice
--keep class tvi.webrtc.** { *; }
--dontwarn tvi.webrtc.**
--keep class com.twilio.video.** { *; }
--keep class com.twilio.common.** { *; }
+-keep class com.twilio.** { *; }
+-keep class tvo.webrtc.** { *; }
+-dontwarn tvo.webrtc.**
+-keep class com.twilio.voice.** { *; }
 -keepattributes InnerClasses
