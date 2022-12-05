@@ -33,6 +33,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 //import com.twilio.voice.Call;
 import com.twilio.voice.CallInvite;
 
+import java.util.Objects;
+
 public class BackgroundCallJavaActivity extends AppCompatActivity {
 
     private static String TAG = "BackgroundCallActivity";
@@ -41,9 +43,9 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
 
     //    private Call activeCall;
     private NotificationManager notificationManager;
-
+    
     private PowerManager.WakeLock wakeLock;
-
+     private PowerManager powerManager;
     private TextView tvUserName;
     private TextView tvCallStatus;
     private ImageView btnMute;
