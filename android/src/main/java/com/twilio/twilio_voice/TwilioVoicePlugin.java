@@ -10,7 +10,6 @@ import com.twilio.voice.RegistrationException;
 import com.twilio.voice.RegistrationListener;
 import com.twilio.voice.UnregistrationListener;
 import com.twilio.voice.Voice;
-import com.twilio.twilio_voice.AnswerJavaActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +30,6 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Lifecycle;
@@ -49,8 +47,6 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry;
-
-import static java.lang.Boolean.getBoolean;
 
 public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCallHandler, EventChannel.StreamHandler,
         ActivityAware, PluginRegistry.NewIntentListener {
@@ -341,7 +337,7 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
         }
     }
 
-    private void unregisterForCallInvites(String accessToken) {
+    private boolean unregisterForCallInvites(String accessToken) {
          if(this.fcmToken == null){
             return false;
         }
@@ -713,6 +709,7 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
         }
     }
 
+    @SuppressLint("WrongConstant")
     private void setAudioFocus(boolean setFocus) {
         if (audioManager != null) {
             if (setFocus) {
