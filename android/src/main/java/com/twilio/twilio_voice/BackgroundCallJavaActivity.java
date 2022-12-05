@@ -45,18 +45,22 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     private TextView tvCallStatus;
     private ImageView btnMute;
     private ImageView btnOutput;
-    private ImageView btnHangUp;
+    private LinearLayout btnHangUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+       super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_background_call);
+        powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
         tvUserName = (TextView) findViewById(R.id.tvUserName);
         tvCallStatus = (TextView) findViewById(R.id.tvCallStatus);
         btnMute = (ImageView) findViewById(R.id.btnMute);
         btnOutput = (ImageView) findViewById(R.id.btnOutput);
-        btnHangUp = (ImageView) findViewById(R.id.btnHangUp);
+        btnHangUp = (LinearLayout) findViewById(R.id.btnHangUp);
 
         KeyguardManager kgm = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
         Boolean isKeyguardUp = kgm.inKeyguardRestrictedInputMode();
@@ -109,6 +113,30 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
             }else{
                 finish();
             }
+        }
+    }
+
+    private void activateSensor() {
+//        if (wakeLock == null) {
+//            Log.d(TAG, "New wakeLog");
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                wakeLock = powerManager.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "incall");
+//            }
+//        }
+        if (wakeLock == null) {
+            Log.d(TAG, "New wakeLog");
+            wakeLock = powerManager.newWakeLock(PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK, "incall");
+        }
+        if (!wakeLock.isHeld()) {
+            Log.d(TAG, "wakeLog acquire");
+            wakeLock.acquire();
+        }
+    }
+
+    private void deactivateSensor() {
+        if (wakeLock != null && wakeLock.isHeld()) {
+            Log.d(TAG, "wakeLog release");
+            wakeLock.release();
         }
     }
 

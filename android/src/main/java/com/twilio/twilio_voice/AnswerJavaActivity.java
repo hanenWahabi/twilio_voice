@@ -47,20 +47,23 @@ public class AnswerJavaActivity extends AppCompatActivity {
     private static final int MIC_PERMISSION_REQUEST_CODE = 17893;
     private PowerManager.WakeLock wakeLock;
     private TextView tvUserName;
-    private TextView tvCallStatus;
-    private ImageView btnAnswer;
-    private ImageView btnReject;
+    // private TextView tvCallStatus;
+    private LinearLayout btnAnswer;
+    private LinearLayout btnReject;
     Call.Listener callListener = callListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+       super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_answer);
 
         tvUserName = (TextView) findViewById(R.id.tvUserName);
-        tvCallStatus = (TextView) findViewById(R.id.tvCallStatus);
-        btnAnswer = (ImageView) findViewById(R.id.btnAnswer);
-        btnReject = (ImageView) findViewById(R.id.btnReject);
+        // tvCallStatus = (TextView) findViewById(R.id.tvCallStatus);
+        btnAnswer = (LinearLayout) findViewById(R.id.btnAnswer);
+        btnReject = (LinearLayout) findViewById(R.id.btnReject);
 
         KeyguardManager kgm = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
         boolean isKeyguardUp = kgm.inKeyguardRestrictedInputMode();
@@ -100,7 +103,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
             String action = intent.getAction();
             activeCallInvite = intent.getParcelableExtra(Constants.INCOMING_CALL_INVITE);
             activeCallNotificationId = intent.getIntExtra(Constants.INCOMING_CALL_NOTIFICATION_ID, 0);
-            tvCallStatus.setText(R.string.incoming_call_title);
+            //tvCallStatus.setText(R.string.incoming_call_title);
             Log.d(TAG, action);
             switch (action) {
                 case Constants.ACTION_INCOMING_CALL:
@@ -147,28 +150,29 @@ public class AnswerJavaActivity extends AppCompatActivity {
 
 
     private void configCallUI() {
-        Log.d(TAG, "configCallUI");
+       Log.d(TAG, "configCallUI");
         if (activeCallInvite != null) {
+           // String fromName = activeCallInvite.getCustomParameters().get("caller_name");
+            String firstname = activeCallInvite.getCustomParameters().get("firstname");
+            String lastname = activeCallInvite.getCustomParameters().get("lastname");
+            String phoneNum = activeCallInvite.getFrom();
+            Log.d(TAG,firstname.toString());
+            Log.d(TAG,lastname.toString());
+            Log.d(TAG,phoneNum.toString());
+            
+            String allNameUsed = firstname == null || lastname ==null ? phoneNum : firstname +" "+ lastname;
+//            if(fromName == null) {
+//                fromName = getString(R.string.unknown_caller);
+//            }
 
-            String fromId = activeCallInvite.getFrom().replace("client:", "");
-            SharedPreferences preferences = getApplicationContext().getSharedPreferences(TwilioPreferences, Context.MODE_PRIVATE);
-            String caller = preferences.getString(fromId, preferences.getString("defaultCaller", getString(R.string.unknown_caller)));
-            tvUserName.setText(caller);
+            tvUserName.setText(allNameUsed);
 
-            btnAnswer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "onCLick");
-                    checkPermissionsAndAccept();
-                }
+            btnAnswer.setOnClickListener(v -> {
+                Log.d(TAG, "click: Call Accepted");
+                AnswerJavaActivity.this.checkPermissionsAndAccept();
             });
 
-            btnReject.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    rejectCallClickListener();
-                }
-            });
+            btnReject.setOnClickListener(v -> AnswerJavaActivity.this.rejectCallClickListener());
         }
     }
 
