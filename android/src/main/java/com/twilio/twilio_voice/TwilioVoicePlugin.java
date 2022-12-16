@@ -404,11 +404,22 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
             sendPhoneCallEvents(speakerIsOn ? "Speaker On" : "Speaker Off");
 
             result.success(true);
-        } else if (call.method.equals("toggleMute")) {
+        } else if (call.method.equals("isOnSpeaker")) {
+            boolean isSpeakerOn = audioManager.isSpeakerphoneOn();
+            result.success(isSpeakerOn);
+        }
+        else if (call.method.equals("toggleMute")) {
           boolean muted = call.argument("muted");
             Log.d(TAG, "Muting call");
             this.mute(muted);
             result.success(true);
+        }else if (call.method.equals("isMuted")) {
+            Log.d(TAG, "isMuted invoked");
+            if(activeCall != null) {
+                result.success(activeCall.isMuted());
+            } else {
+                result.success(false);
+            }
         } else if (call.method.equals("call-sid")) {
             result.success(activeCall == null ? null : activeCall.getSid());
         } else if (call.method.equals("isOnCall")) {
@@ -429,8 +440,12 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
             Log.d(TAG, "Get params user invite "+ allNameUsed);
             result.success(allNameUsed); 
         } else if (call.method.equals("holdCall")) {
-            Log.d(TAG, "Hold call invoked");
-            this.hold();
+            // Log.d(TAG, "Hold call invoked");
+            // this.hold();
+            // result.success(true);
+             Log.d(TAG, "Hold call invoked");
+            boolean shouldHold = call.argument("shouldHold");
+            this.updateHoldState(shouldHold);
             result.success(true);
         } else if (call.method.equals("answer")) {
             Log.d(TAG, "Answering call");
@@ -438,8 +453,10 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
             result.success(true);
         } else if (call.method.equals("unregister")) {
             String accessToken = call.argument("accessToken");
-            this.unregisterForCallInvites(accessToken);
-            result.success(true);
+            // this.unregisterForCallInvites(accessToken);
+            // result.success(true);
+            boolean res = this.unregisterForCallInvites(accessToken);
+            result.success(res);
         } else if (call.method.equals("makeCall")) {
             Log.d(TAG, "Making new call");
             sendPhoneCallEvents("LOG|Making new call");
@@ -459,7 +476,8 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
             Log.d(TAG, "calling to " + call.argument("To").toString());
             this.activeCall = Voice.connect(this.activity, connectOptions, this.callListener);
             result.success(true);
-        } else if (call.method.equals("registerClient")) {
+        }
+         else if (call.method.equals("registerClient")) {
             String id = call.argument("id");
             String name = call.argument("name");
             boolean added = false;
@@ -706,6 +724,20 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
         callOutgoing = false;
         activeCall = null;
 
+    }
+
+    private void updateHoldState(boolean shouldHold) {
+        if (activeCall != null) {
+            boolean hold = activeCall.isOnHold();
+            if (shouldHold && !hold) {
+                activeCall.hold(true);
+                sendPhoneCallEvents("Hold");
+            } else if(!shouldHold && hold) {
+                // hold call only when required to
+                activeCall.hold(false);
+                sendPhoneCallEvents("Unhold");
+            }
+        }
     }
 
     private void hold() {
