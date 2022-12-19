@@ -39,7 +39,7 @@ import java.util.Objects;
 public class AnswerJavaActivity extends AppCompatActivity {
 
     private static String TAG = "AnswerActivity";
-    public static final String TwilioPreferences = "mx.TwilioPreferences";
+    public static final String TwilioPreferences = "com.twilio.twilio_voicePreferences";
 
     private NotificationManager notificationManager;
     private boolean isReceiverRegistered = false;
@@ -211,6 +211,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
             notificationManager.cancel(activeCallNotificationId);
 
         }
+        
     }
 
     private void startAnswerActivity(Call call) {
