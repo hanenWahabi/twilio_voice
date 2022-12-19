@@ -36,9 +36,11 @@ import java.util.Objects;
 
 
 
+
 public class AnswerJavaActivity extends AppCompatActivity {
 
     private static String TAG = "AnswerActivity";
+    private SharedPreferences pSharedPref;
     public static final String TwilioPreferences = "com.twilio.twilio_voicePreferences";
 
     private NotificationManager notificationManager;
@@ -169,6 +171,11 @@ public class AnswerJavaActivity extends AppCompatActivity {
 //            if(fromName == null) {
 //                fromName = getString(R.string.unknown_caller);
 //            }
+            SharedPreferences.Editor edit = pSharedPref.edit();
+
+
+            edit.putString("defaultCaller", allNameUsed);
+            edit.apply();
 
             tvUserName.setText(allNameUsed);
 

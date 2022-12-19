@@ -39,15 +39,15 @@
                 android:id="@+id/tvCallStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="50dp"
+                android:layout_marginLeft="50dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginRight="50dp"
                 android:text="Mobile"
                 android:textAlignment="center"
                 android:textColor="@color/text_color"
-                android:textSize="16sp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="50dp" />
+                android:textSize="16sp" />
 
             <Space
                 android:layout_width="match_parent"

@@ -35,6 +35,7 @@ public class IncomingCallNotificationService extends Service {
 
     private static final String TAG = IncomingCallNotificationService.class.getSimpleName();
     public static final String TwilioPreferences = "com.twilio.twilio_voicePreferences";
+    private SharedPreferences pSharedPref;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -367,6 +368,15 @@ public class IncomingCallNotificationService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             setCallInProgressNotification(callInvite, notificationId);
         }
+
+        SharedPreferences.Editor edit = pSharedPref.edit();
+        String firstname = callInvite.getCustomParameters().get("firstname");
+        String lastname = callInvite.getCustomParameters().get("lastname");
+        String phone = callInvite.getFrom();
+        String caller = firstname == null && lastname == null ? phone : firstname+" "+lastname;
+        edit.putString("defaultCaller", caller);
+        edit.apply();
+        
         sendCallInviteToActivity(callInvite, notificationId);
     }
 
