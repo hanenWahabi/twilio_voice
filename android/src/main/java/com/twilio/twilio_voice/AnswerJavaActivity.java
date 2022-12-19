@@ -165,7 +165,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
             Log.d(TAG,lastname.toString());
             Log.d(TAG,phoneNum.toString());
             
-            String allNameUsed = firstname == null || lastname ==null ? phoneNum : firstname +" "+ lastname;
+            String allNameUsed = firstname +" "+ lastname;
 //            if(fromName == null) {
 //                fromName = getString(R.string.unknown_caller);
 //            }
