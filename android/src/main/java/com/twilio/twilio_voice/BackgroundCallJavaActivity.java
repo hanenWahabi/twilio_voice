@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -55,9 +56,9 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        Objects.requireNonNull(getSupportActionBar()).hide();
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_background_call);
         powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
@@ -102,6 +103,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
 
 
             if (intent.getStringExtra(Constants.CALL_FROM) != null) {
+                activateSensor();
             String fromId = intent.getStringExtra(Constants.CALL_FROM).replace("client:", "");
 
 
@@ -120,6 +122,7 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
             }
         }
     }
+
 
     private void activateSensor() {
 //        if (wakeLock == null) {
@@ -232,9 +235,10 @@ public class BackgroundCallJavaActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (wakeLock != null) {
-            wakeLock.release();
-        }
+//        if (wakeLock != null) {
+//            wakeLock.release();
+//        }
+        deactivateSensor();
     }
 
 }
