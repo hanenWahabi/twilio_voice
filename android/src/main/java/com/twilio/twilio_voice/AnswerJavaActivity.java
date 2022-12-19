@@ -213,7 +213,7 @@ public class AnswerJavaActivity extends AppCompatActivity {
         }
         SharedPreferences preferences = getApplicationContext().getSharedPreferences(TwilioPreferences, Context.MODE_PRIVATE);
         String caller = preferences.getString("isOnForeground", preferences.getString("isOnForeground", "false"));
-        if(Objects.equals(caller, "true")){
+        if(caller.equals("true")){
             activeCallInvite.accept(this, callListener);
             notificationManager.cancel(activeCallNotificationId);
         }
