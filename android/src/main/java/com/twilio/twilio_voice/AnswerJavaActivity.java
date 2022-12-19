@@ -207,9 +207,11 @@ public class AnswerJavaActivity extends AppCompatActivity {
         startService(acceptIntent);
         if (TwilioVoicePlugin.hasStarted) {
             finish();
+        }else{
+            activeCallInvite.accept(this, callListener);
+            notificationManager.cancel(activeCallNotificationId);
         }
-        activeCallInvite.accept(this, callListener);
-        notificationManager.cancel(activeCallNotificationId);
+        
         // if(!TwilioVoicePlugin.hasStarted){
         //     activeCallInvite.accept(this, callListener);
         //     notificationManager.cancel(activeCallNotificationId);
