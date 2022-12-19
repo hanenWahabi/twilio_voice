@@ -390,6 +390,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.Lifecycle;
@@ -443,6 +444,7 @@ public class IncomingCallNotificationService extends Service {
         return null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private Notification createNotification(CallInvite callInvite, int notificationId, int channelImportance) {
         Log.i(TAG, "createNotification");
         Intent intent = new Intent(this, AnswerJavaActivity.class);
@@ -459,7 +461,7 @@ public class IncomingCallNotificationService extends Service {
         extras.putString(Constants.CALL_SID_KEY, callInvite.getCallSid());
 
         Context context = getApplicationContext();
-        SharedPreferences preferences = context.getSharedPreferences(TwilioPreferences, Context.MODE_PRIVATE);
+        // SharedPreferences preferences = context.getSharedPreferences(TwilioPreferences, Context.MODE_PRIVATE);
         // String caller = Helper.getUsableName(callInvite, preferences, getString(R.string.unknown_caller));
         String firstname = callInvite.getCustomParameters().get("firstname");
         String lastname = callInvite.getCustomParameters().get("lastname");
