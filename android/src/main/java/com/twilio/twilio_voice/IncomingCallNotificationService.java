@@ -375,6 +375,7 @@ public class IncomingCallNotificationService extends Service {
         String phone = callInvite.getFrom();
         String caller = firstname == null && lastname == null ? phone : firstname+" "+lastname;
         edit.putString("defaultCaller", caller);
+        
         edit.apply();
         
         sendCallInviteToActivity(callInvite, notificationId);
