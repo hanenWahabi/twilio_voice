@@ -211,6 +211,12 @@ public class AnswerJavaActivity extends AppCompatActivity {
             activeCallInvite.accept(this, callListener);
             notificationManager.cancel(activeCallNotificationId);
         }
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences(TwilioPreferences, Context.MODE_PRIVATE);
+        String caller = preferences.getString("isOnForeground", preferences.getString("isOnForeground", "false"));
+        if(Objects.equals(caller, "true")){
+            activeCallInvite.accept(this, callListener);
+            notificationManager.cancel(activeCallNotificationId);
+        }
         
         // if(!TwilioVoicePlugin.hasStarted){
         //     activeCallInvite.accept(this, callListener);

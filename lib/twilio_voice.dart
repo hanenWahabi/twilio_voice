@@ -436,6 +436,11 @@ class TwilioVoice {
         'defaultCaller', <String, dynamic>{"defaultCaller": callerName});
   }
 
+  Future<bool?> setDefaultCallerNameFore(String callerName) {
+    return _channel.invokeMethod(
+        'isOnForeground', <String, dynamic>{"isOnForeground": callerName});
+  }
+
   /// Android-only, shows background call UI
   Future<bool?> showBackgroundCallUI() {
     return _channel.invokeMethod("backgroundCallUI", {});

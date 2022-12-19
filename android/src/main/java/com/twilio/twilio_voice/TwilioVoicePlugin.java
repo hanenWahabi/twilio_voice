@@ -512,7 +512,20 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
                 added = true;
             }
             result.success(added);
-        } else if (call.method.equals("hasMicPermission")) {
+        } else if (call.method.equals("isOnForeground")) {
+            String caller = call.argument("isOnForeground");
+            boolean added = false;
+            if (caller != null) {
+                sendPhoneCallEvents("LOG|isOnForeground is " + caller);
+                SharedPreferences.Editor edit = pSharedPref.edit();
+                edit.putString("isOnForeground", caller);
+                edit.apply();
+                added = true;
+            }
+            result.success(added);
+        }
+
+        else if (call.method.equals("hasMicPermission")) {
             result.success(this.checkPermissionForMicrophone());
         } else if (call.method.equals("requestMicPermission")) {
             sendPhoneCallEvents("LOG|requesting mic permission");
