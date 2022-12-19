@@ -70,8 +70,8 @@
 
                     <ImageView
                         android:id="@+id/btnOutput"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:background="@drawable/bg_full_rounded"
                         android:backgroundTint="@color/accent"
                         android:scaleType="centerInside"
@@ -89,8 +89,8 @@
 
                     <ImageView
                         android:id="@+id/btnMute"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:background="@drawable/bg_full_rounded"
                         android:backgroundTint="@color/accent"
                         android:scaleType="centerInside"
