@@ -142,17 +142,17 @@ public class TwilioVoicePlugin implements FlutterPlugin, MethodChannel.MethodCal
                     break;
                 case Constants.ACTION_ACCEPT:
                         int acceptOrigin = intent.getIntExtra(Constants.ACCEPT_CALL_ORIGIN,0);
-                        if(acceptOrigin == 0){
-                             Intent answerIntent = new Intent(activity, AnswerJavaActivity.class);
-                            answerIntent.setAction(Constants.ACTION_ACCEPT);
-                            answerIntent.putExtra(Constants.INCOMING_CALL_NOTIFICATION_ID, activeCallNotificationId);
-                            answerIntent.putExtra(Constants.INCOMING_CALL_INVITE, activeCallInvite);
-                            answerIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                            answerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            activity.startActivity(answerIntent);
-                        }else{
+                        // if(acceptOrigin == 0){
+                        //      Intent answerIntent = new Intent(activity, AnswerJavaActivity.class);
+                        //     answerIntent.setAction(Constants.ACTION_ACCEPT);
+                        //     answerIntent.putExtra(Constants.INCOMING_CALL_NOTIFICATION_ID, activeCallNotificationId);
+                        //     answerIntent.putExtra(Constants.INCOMING_CALL_INVITE, activeCallInvite);
+                        //     answerIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        //     answerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        //     activity.startActivity(answerIntent);
+                        // }else{
                             answer();
-                        }
+                        //}
 
                     break;
                 case Constants.ACTION_TOGGLE_MUTE:
