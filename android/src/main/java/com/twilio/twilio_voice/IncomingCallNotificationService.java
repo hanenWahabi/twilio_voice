@@ -179,14 +179,14 @@ public class IncomingCallNotificationService extends Service {
         rejectIntent.setAction(Constants.ACTION_REJECT);
         rejectIntent.putExtra(Constants.INCOMING_CALL_INVITE, callInvite);
         rejectIntent.putExtra(Constants.INCOMING_CALL_NOTIFICATION_ID, notificationId);
-        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent piRejectIntent = PendingIntent.getService(getApplicationContext(), 0, rejectIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent piRejectIntent = PendingIntent.getService(getApplicationContext(), 0, rejectIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent acceptIntent = new Intent(getApplicationContext(), IncomingCallNotificationService.class);
         acceptIntent.setAction(Constants.ACTION_ACCEPT);
         acceptIntent.putExtra(Constants.ACCEPT_CALL_ORIGIN, 0);
         acceptIntent.putExtra(Constants.INCOMING_CALL_INVITE, callInvite);
         acceptIntent.putExtra(Constants.INCOMING_CALL_NOTIFICATION_ID, notificationId);
-        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent piAcceptIntent = PendingIntent.getService(getApplicationContext(), 0, acceptIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent piAcceptIntent = PendingIntent.getService(getApplicationContext(), 0, acceptIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         long[] mVibratePattern = new long[]{0, 400, 400, 400, 400, 400, 400, 400};
 
