@@ -207,10 +207,11 @@ public class AnswerJavaActivity extends AppCompatActivity {
         // } else {
         //     Log.d(TAG, "Answering call");
 
-        //     activeCallInvite.accept(this, callListener);
-        //     notificationManager.cancel(activeCallNotificationId);
+            // activeCallInvite.accept(this, callListener);
+            // notificationManager.cancel(activeCallNotificationId);
 
         // }
+        
         
     }
 
