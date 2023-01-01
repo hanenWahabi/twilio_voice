@@ -13,7 +13,7 @@
     <activity android:name=".BackgroundCallJavaActivity" android:turnScreenOn="true" android:showWhenLocked="true" android:showOnLockScreen="true" android:theme="@style/Theme.AppCompat" />
 
     <service android:enabled="true" android:name=".IncomingCallNotificationService"
-        android:exported="false">
+        android:exported="false|true">
       <intent-filter>
         <action android:name="ACTION_ACCEPT" />
         <action android:name="ACTION_REJECT" />
